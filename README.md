@@ -139,3 +139,26 @@ else
 disp("error")
 end
 ```
+## Inputs and Results
+
+To run this program, only two inputs are needed, the first input is the detector
+type. The detector types are listed below.
+```
+Input           Detector
+keVvalues3b3p - 3x3 planar
+keVvalues2b2p - 2x2 planar
+keVvalues2b2w - 2x2 well
+```
+The user will be prompted to input the radionuclide they want to identify,
+this could be a text file of their own or one of the text files that I have
+imported into the program. This text file should contain all the counts of
+the energy values. As can be seen in Figure 4.1, the program will then output the data plotted against the corresponding keV values. Additionally, the program will
+return the radionuclide that it identifies.
+
+![3](https://github.com/user-attachments/assets/782d75f1-1165-4856-bdea-59f85ce1bc3d)
+
+If the program is run in a modern high-level programming language, the arrays will be accessible and will arrays contain the peaks of individual spectra.
+Information about the standard deviations can also be accessed within the
+corresponding arrays that I have created. An example of this can be seen in
+Figure 2.8 (See Above).
+
