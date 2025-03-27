@@ -4,7 +4,7 @@ This project which I wrote for my University Dissertation explores how to create
 based on their gamma-ray spectrometry. It investigates the mathematics behind nuclear decay and derives the decay equation. In doing so, this project
 provides a structured method in which to analyse gamma-spectra and the
 reasoning behind doing so. The importance of this analysis has many applications in medicinal imaging and use by LabLogic Systems. Analysis within
-this report contains many details and methods that are useful to this application.
+this report contains many details and methods that are useful to this application. All code attatched can be pasted into MATLAB for analysis, any data however was forbidden to share and protected under a non-disclosure agreement and so cannot be shared.
 
 ## Science Behind Programming
 
@@ -48,7 +48,7 @@ q=(size(data,2));
 The following code is the code for the rolling standard deviation of the
 data. This section takes the standard deviation iteratively of the first point
 in the array data, then the first and second points, followed by the points
-x0,x1 and x2. It then stores these in an array which I have labelled result and
+x<sub>0</sub>,x<sub>1</sub> and x<sub>2</sub>. It then stores these in an array which I have labelled result and
 result2. The first for loop repeats over half of the array data and the second
 for loop repeats over the second half. The reason for doing this process twice
 is that for certain isotopes, such as co60, the program will create higher
@@ -57,4 +57,85 @@ the loop allows the rolling standard deviation to more accurately identify
 peaks in the second half of the dataset.
 The variable ‘sd’ takes the standard deviation of the current point x<sub>i</sub> and
 ‘average’ takes the average of all points before and including x<sub>i</sub>.
-.
+```MATLAB
+result =[];
+sd=0.0;
+sum=0.0;
+average=0.0;
+for i = 1:q/2
+sum = sum + data(i);
+average = sum/(i);
+sd = sqrt((data(1,i)-average)^2)/(i);
+result(end+1)=(sd);
+end
+result2 =[];
+sd=0.0;
+sum=0.0;
+average=0.0;
+for i = ((q/2)+1):q
+23
+sum = sum + data(i);
+average = sum/(i);
+sd = sqrt((data(1,i)-average)^2)/(i);
+result2(end+1)=(sd);
+end
+```
+Variables ‘I’ and ‘J’ are the top 15 highest standard deviations from the loop
+that created result and result2 respectively. Finding the positions of these
+standard deviations, relative to the corresponding keV values, is important
+to return the peak and label the isotope at the end of the program.
+```MATLAB
+I=maxk(result,15);
+J=maxk(result2,15);
+```
+The loop in the following code writes the keV values and their corresponding counts to a 2d array. This means that the 2d array contains the top
+highest standard deviations from earlier, which are the peaks of the gamma
+spectra. These keV values and counts are then written to peaks and peaks2
+respectively.
+```MATLAB
+peaks=[];
+peaks2=[];
+for p = 1:15
+linearIndices1 = find(result==I(1,p));
+linearIndices2 = find(result2==J(1,p));
+peaks=[peaks;keVvalues(1,linearIndices1),data(1,linearIndices1)];
+peaks2=[peaks2;keVvalues(1,(linearIndices2+(q/2))),data(1,(linearIndices2+512))];
+end
+```
+The following code plots the gamma spectra. Similar to the program Laura,
+the gamma spectra are displayed in a window when the program has finished
+running. Axes are labelled with appropriate labels relating to the counts and
+keV values.
+```MATLAB
+plot(keVvalues,data);
+xlabel(’keV Value’)
+ylabel(’Counts’)
+title(’Gamma Spectroscopy’)
+```
+Below are the criteria for identifying which radionuclide has been analysed. This data is taken directly from the LNHB[1]. The criteria for Cs-137
+states that, if there exists a keV value in peaks between 655 and 665, then
+it must be Cs-137. This is because only Cs-137 would have a peak between
+655 and 665.
+```MATLAB
+ba133=peaks(peaks>88.0 & peaks<92.0);
+co60=peaks2(peaks2<1317.0 & peaks2>1302.0);
+na22=peaks2(peaks2<1280.0 & peaks2>1270.0);
+cs137=peaks(peaks<665.0 & peaks>655.0);
+```
+The final section of code below is a collection of selective statements, which
+determine what to return to the user. If the criteria for Ba-133 is satisfied,
+then the variable ‘ba133’ will not be empty, then the program will return a
+statement telling the user that the sample must contain Ba-133.
+```MATLAB
+if isempty(cs137)== false
+disp("the sample contains cs137")
+elseif (isempty(ba133) == false && length(ba133)>=length(co60))
+disp("the sample contains ba133")
+elseif (isempty(co60) == false && length(co60)>length(ba133))
+disp("the sample contains co60")
+elseif isempty(na22) == false
+disp("the sample contains na22")
+else
+disp("error")
+end
+```
