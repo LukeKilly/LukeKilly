@@ -63,21 +63,20 @@ sd=0.0;
 sum=0.0;
 average=0.0;
 for i = 1:q/2
-sum = sum + data(i);
-average = sum/(i);
-sd = sqrt((data(1,i)-average)^2)/(i);
-result(end+1)=(sd);
+  sum = sum + data(i);
+  average = sum/(i);
+  sd = sqrt((data(1,i)-average)^2)/(i);
+  result(end+1)=(sd);
 end
 result2 =[];
 sd=0.0;
 sum=0.0;
 average=0.0;
 for i = ((q/2)+1):q
-23
-sum = sum + data(i);
-average = sum/(i);
-sd = sqrt((data(1,i)-average)^2)/(i);
-result2(end+1)=(sd);
+  sum = sum + data(i);
+  average = sum/(i);
+  sd = sqrt((data(1,i)-average)^2)/(i);
+  result2(end+1)=(sd);
 end
 ```
 Variables ‘I’ and ‘J’ are the top 15 highest standard deviations from the loop
@@ -96,10 +95,10 @@ respectively.
 peaks=[];
 peaks2=[];
 for p = 1:15
-linearIndices1 = find(result==I(1,p));
-linearIndices2 = find(result2==J(1,p));
-peaks=[peaks;keVvalues(1,linearIndices1),data(1,linearIndices1)];
-peaks2=[peaks2;keVvalues(1,(linearIndices2+(q/2))),data(1,(linearIndices2+512))];
+  linearIndices1 = find(result==I(1,p));
+  linearIndices2 = find(result2==J(1,p));
+  peaks=[peaks;keVvalues(1,linearIndices1),data(1,linearIndices1)];
+  peaks2=[peaks2;keVvalues(1,(linearIndices2+(q/2))),data(1,(linearIndices2+512))];
 end
 ```
 The following code plots the gamma spectra. Similar to the program Laura,
@@ -128,15 +127,15 @@ then the variable ‘ba133’ will not be empty, then the program will return a
 statement telling the user that the sample must contain Ba-133.
 ```MATLAB
 if isempty(cs137)== false
-disp("the sample contains cs137")
+  disp("the sample contains cs137")
 elseif (isempty(ba133) == false && length(ba133)>=length(co60))
-disp("the sample contains ba133")
+  disp("the sample contains ba133")
 elseif (isempty(co60) == false && length(co60)>length(ba133))
-disp("the sample contains co60")
+  disp("the sample contains co60")
 elseif isempty(na22) == false
-disp("the sample contains na22")
+  disp("the sample contains na22")
 else
-disp("error")
+  disp("error")
 end
 ```
 ## Inputs and Results
