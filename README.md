@@ -13,5 +13,8 @@ This project will discuss the creation of an algorithm for LabLogic Systems Ltd,
 Explanation Behind How The Program Works
 
 The final version of my program uses two rolling standard deviations, to create an array of the top 15 standard deviations in each half of the dataset. If within these top 15 standard deviations there exists a high density of keV values around where a peak is expected for a given isotope, the program will identify these spectra as that isotope and return this to the user. Every radionuclide has unique properties where the gamma transitions occur. Using this property, we can identify any given radionuclide. The top standard deviations, which indicate a peak, can be utilised to complete this identification.
+The outputs of the program and the data from the LNHB are included in Figure 2.7 and Figure 2.8.
+
+
 ![Screenshot 2025-03-27 030139](https://github.com/user-attachments/assets/10f2b518-0910-4a4c-badb-08529b831972)
 ![Screenshot 2025-03-27 030200](https://github.com/user-attachments/assets/366593ef-dbca-46fa-8c8a-c38761440c8a)
